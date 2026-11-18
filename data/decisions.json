@@ -1,0 +1,4 @@
+{
+  "selected_framework": "agent_framework",
+  "rationale": "QuickKart requires code-first orchestration of specialist agents, access to custom business tools and extensible workflows. Microsoft Agent Framework is selected for the custom operations application, with Microsoft Foundry and other Microsoft business platforms considered for complementary enterprise capabilities."
+}

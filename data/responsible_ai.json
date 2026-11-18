@@ -1,0 +1,68 @@
+[
+  {
+    "id": "RAI-01",
+    "principle": "Fairness",
+    "risk": "Customers in different regions may receive inconsistent recommendations",
+    "preventive_control": "Use representative business data and segment-aware evaluation",
+    "detective_control": "Compare response quality and escalation rates across regions",
+    "evidence": "Segmented evaluation report",
+    "owner": "Product Owner",
+    "severity": "Medium",
+    "status": "Planned"
+  },
+  {
+    "id": "RAI-02",
+    "principle": "Reliability and safety",
+    "risk": "Agent may provide incorrect payment or delivery information",
+    "preventive_control": "Ground responses in approved order records and validate outputs",
+    "detective_control": "Regression tests, evaluation and incident monitoring",
+    "evidence": "Evaluation report and incident register",
+    "owner": "Engineering Lead",
+    "severity": "High",
+    "status": "Designed"
+  },
+  {
+    "id": "RAI-03",
+    "principle": "Privacy and security",
+    "risk": "Customer information may be disclosed to unauthorized users",
+    "preventive_control": "Data minimization, authentication and authorization before retrieval",
+    "detective_control": "Access-control tests and data exposure monitoring",
+    "evidence": "Security test results",
+    "owner": "Security Lead",
+    "severity": "High",
+    "status": "Planned"
+  },
+  {
+    "id": "RAI-04",
+    "principle": "Inclusiveness",
+    "risk": "Customers using different languages or accessibility modes may receive poor service",
+    "preventive_control": "Design accessible interactions and supported language experiences",
+    "detective_control": "Accessibility and language testing",
+    "evidence": "Accessibility test report",
+    "owner": "UX Lead",
+    "severity": "Medium",
+    "status": "Planned"
+  },
+  {
+    "id": "RAI-05",
+    "principle": "Transparency",
+    "risk": "Customer may believe an AI recommendation is an executed transaction",
+    "preventive_control": "Clearly distinguish recommendations from completed actions",
+    "detective_control": "Transcript review and user experience testing",
+    "evidence": "Reviewed conversation transcripts",
+    "owner": "Product Owner",
+    "severity": "High",
+    "status": "Designed"
+  },
+  {
+    "id": "RAI-06",
+    "principle": "Accountability",
+    "risk": "No owner can investigate an agent recommendation or incident",
+    "preventive_control": "Assign business owners, technical owners and approval responsibilities",
+    "detective_control": "Audit trail completeness and incident review",
+    "evidence": "Audit records and ownership register",
+    "owner": "Operations Lead",
+    "severity": "High",
+    "status": "Designed"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "currency": "USD",
+  "annual_cases": 24000,
+  "minutes_saved_per_case": 8,
+  "loaded_hourly_cost": 22,
+  "adoption_rate": 0.75,
+  "annual_platform_cost": 18000,
+  "annual_build_change_cost": 12000,
+  "annual_ai_cost": 6000,
+  "annual_training_cost": 0,
+  "baseline_note": "Illustrative workshop assumptions. Replace with validated customer data."
+}

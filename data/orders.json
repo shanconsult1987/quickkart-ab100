@@ -1,0 +1,52 @@
+[
+  {
+    "order_id": "QK-1001",
+    "customer": "Aarav",
+    "status": "Delivered",
+    "payment_status": "Paid",
+    "inventory_status": "Available",
+    "delivery_minutes": 28,
+    "issue": "none",
+    "region": "North"
+  },
+  {
+    "order_id": "QK-1002",
+    "customer": "Meera",
+    "status": "Processing",
+    "payment_status": "Pending",
+    "inventory_status": "Available",
+    "delivery_minutes": 62,
+    "issue": "payment_pending",
+    "region": "West"
+  },
+  {
+    "order_id": "QK-1003",
+    "customer": "Kabir",
+    "status": "At risk",
+    "payment_status": "Paid",
+    "inventory_status": "Unavailable",
+    "delivery_minutes": 95,
+    "issue": "inventory_shortage",
+    "region": "South"
+  },
+  {
+    "order_id": "QK-1004",
+    "customer": "Anaya",
+    "status": "Delivered",
+    "payment_status": "Paid",
+    "inventory_status": "Available",
+    "delivery_minutes": 31,
+    "issue": "none",
+    "region": "East"
+  },
+  {
+    "order_id": "QK-1005",
+    "customer": "Ishaan",
+    "status": "Delayed",
+    "payment_status": "Paid",
+    "inventory_status": "Available",
+    "delivery_minutes": 81,
+    "issue": "delivery_delay",
+    "region": "North"
+  }
+]

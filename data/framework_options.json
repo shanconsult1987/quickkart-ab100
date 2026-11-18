@@ -1,0 +1,47 @@
+[
+  {
+    "id": "copilot_studio",
+    "name": "Microsoft Copilot Studio",
+    "category": "Low-code agent platform",
+    "best_for": "Business process agents and low-code automation",
+    "strength": "Business-friendly agent creation and workflow integration",
+    "tradeoff": "Some custom orchestration scenarios require additional engineering",
+    "example": "Customer service agent"
+  },
+  {
+    "id": "agent_framework",
+    "name": "Microsoft Agent Framework",
+    "category": "Code-first agent framework",
+    "best_for": "Custom agents, tools, workflows and multi-agent orchestration",
+    "strength": "Developer control and extensible orchestration",
+    "tradeoff": "Engineering, hosting, security and operational responsibilities",
+    "example": "QuickKart multi-agent investigation"
+  },
+  {
+    "id": "foundry",
+    "name": "Microsoft Foundry",
+    "category": "Enterprise AI platform",
+    "best_for": "Model lifecycle and enterprise AI application development",
+    "strength": "Model and AI application platform capabilities",
+    "tradeoff": "Requires platform configuration and cost management",
+    "example": "Enterprise model and agent platform"
+  },
+  {
+    "id": "dynamics",
+    "name": "Dynamics 365 AI",
+    "category": "Business application AI",
+    "best_for": "AI embedded into enterprise business processes",
+    "strength": "Business application context",
+    "tradeoff": "Depends on application footprint and licensing",
+    "example": "Customer service operations"
+  },
+  {
+    "id": "m365",
+    "name": "Microsoft 365 Copilot Agents",
+    "category": "Employee productivity",
+    "best_for": "Knowledge work and employee experiences",
+    "strength": "Microsoft 365 work context",
+    "tradeoff": "Not a replacement for all transactional workflows",
+    "example": "Internal operations knowledge agent"
+  }
+]

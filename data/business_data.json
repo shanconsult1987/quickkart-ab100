@@ -1,0 +1,25 @@
+{
+  "company": "QuickKart",
+  "industry": "Digital Native Commerce",
+  "country": "India",
+  "business_objective": "Improve customer experience and reduce operational investigation costs",
+  "annual_exception_cases": 24000,
+  "average_investigation_minutes": 12,
+  "target_investigation_minutes": 4,
+  "target_ai_adoption": 0.75,
+  "business_processes": [
+    "Order investigation",
+    "Payment investigation",
+    "Inventory investigation",
+    "Delivery investigation",
+    "Customer communication"
+  ],
+  "business_stakeholders": [
+    "CIO",
+    "CTO",
+    "COO",
+    "Head of Customer Experience",
+    "Head of Engineering",
+    "Chief Financial Officer"
+  ]
+}

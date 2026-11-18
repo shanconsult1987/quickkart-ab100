@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>QuickKart AI Decision Center</title>
+
+<style>
+
+:root {
+    --bg: #091525;
+    --panel: #14243a;
+    --panel2: #1a304b;
+    --text: #eef5ff;
+    --muted: #9db1c9;
+    --cyan: #42d6d0;
+    --blue: #78a4ff;
+    --green: #48d6a1;
+    --border: #2a425e;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(circle at top left,
+        #193b5c, #091525 48%);
+
+    color: var(--text);
+    font-family: Segoe UI, Arial, sans-serif;
+}
+
+main {
+    max-width: 1450px;
+    margin: auto;
+    padding: 28px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+h1 {
+    font-size: 30px;
+    margin: 5px 0;
+}
+
+h2 {
+    font-size: 18px;
+    margin-top: 0;
+}
+
+h3 {
+    font-size: 14px;
+}
+
+.eyebrow {
+    color: var(--cyan);
+    letter-spacing: 2px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.subtitle {
+    color: var(--muted);
+}
+
+.status {
+    border: 1px solid #28616b;
+    color: var(--cyan);
+    padding: 8px 13px;
+    border-radius: 20px;
+    font-size: 11px;
+}
+
+.grid {
+    display: grid;
+    gap: 15px;
+}
+
+.two {
+    grid-template-columns: 1fr 1fr;
+}
+
+.three {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.card {
+    background: linear-gradient(
+        145deg, var(--panel), #101d30
+    );
+
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 19px;
+    box-shadow: 0 10px 30px #0003;
+}
+
+.label {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.metric {
+    font-size: 27px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.kpis {
+    grid-template-columns: repeat(4, 1fr);
+    margin-bottom: 15px;
+}
+
+.framework {
+    background: #0d1b2d;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.framework p {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 11px;
+    margin: 6px 0;
+    color: var(--text);
+    background: #0a192b;
+    border: 1px solid #3a526d;
+    border-radius: 8px;
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+button {
+    padding: 11px 15px;
+    background: #137a80;
+    color: white;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #19949a;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+td, th {
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    color: var(--muted);
+}
+
+.result {
+    background: #0a192b;
+    border-radius: 9px;
+    padding: 12px;
+    margin-top: 12px;
+    white-space: pre-wrap;
+}
+
+.note {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.green {
+    color: var(--green);
+}
+
+section {
+    margin-bottom: 15px;
+}
+
+@media(max-width: 900px) {
+    .two {
+        grid-template-columns: 1fr;
+    }
+
+    .kpis {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 550px) {
+    main {
+        padding: 12px;
+    }
+
+    .three {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    h1 {
+        font-size: 23px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<main>
+
+<header>
+
+<div>
+
+<div class="eyebrow">
+QUICKKART · DIGITAL NATIVE · AB-100
+</div>
+
+<h1>AI Strategy & Decision Center</h1>
+
+<div class="subtitle">
+Plan · Architect · Govern · Measure Business Value
+</div>
+
+</div>
+
+<div class="status">
+● EXECUTIVE WORKSHOP ENVIRONMENT
+</div>
+
+</header>
+
+<section class="grid kpis">
+
+<div class="card">
+<div class="label">Annual Exception Cases</div>
+<div class="metric" id="cases">0</div>
+</div>
+
+<div class="card">
+<div class="label">Investigation Time</div>
+<div class="metric" id="time">0 min</div>
+</div>
+
+<div class="card">
+<div class="label">AI Adoption Target</div>
+<div class="metric" id="adoption">0%</div>
+</div>
+
+<div class="card">
+<div class="label">Business Processes</div>
+<div class="metric" id="processes">0</div>
+</div>
+
+</section>
+
+<section class="grid two">
+
+<div class="card">
+
+<h2>1. Microsoft AI Frameworks</h2>
+
+<div id="frameworks"></div>
+
+</div>
+
+<div class="card">
+
+<h2>2. Architecture Decision</h2>
+
+<p class="note">
+Choose a platform for QuickKart and explain
+your architecture decision.
+</p>
+
+<select id="framework">
+
+<option value="copilot_studio">
+Microsoft Copilot Studio
+</option>
+
+<option value="agent_framework">
+Microsoft Agent Framework
+</option>
+
+<option value="foundry">
+Microsoft Foundry
+</option>
+
+<option value="dynamics">
+Dynamics 365 AI
+</option>
+
+<option value="m365">
+Microsoft 365 Copilot Agents
+</option>
+
+</select>
+
+<textarea
+id="rationale"
+placeholder="Explain why this platform is suitable for QuickKart..."
+></textarea>
+
+<button onclick="saveDecision()">
+Save Architecture Decision
+</button>
+
+<div class="result" id="decisionResult">
+No decision submitted.
+</div>
+
+</div>
+
+</section>
+
+<section class="grid two">
+
+<div class="card">
+
+<h2>3. Responsible AI Matrix</h2>
+
+<div style="overflow:auto">
+
+<table>
+
+<thead>
+<tr>
+<th>Principle</th>
+<th>Risk</th>
+<th>Owner</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="rai"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>4. Interactive ROI Calculator</h2>
+
+<div class="three">
+
+<div>
+<label class="label">Annual Cases</label>
+<input id="annualCases" type="number" value="24000">
+</div>
+
+<div>
+<label class="label">Minutes Saved</label>
+<input id="minutesSaved" type="number" value="8">
+</div>
+
+<div>
+<label class="label">Hourly Cost ($)</label>
+<input id="hourlyCost" type="number" value="22">
+</div>
+
+<div>
+<label class="label">Adoption Rate</label>
+<input id="adoptionRate" type="number" step="0.05" value="0.75">
+</div>
+
+<div>
+<label class="label">Platform Cost ($)</label>
+<input id="platformCost" type="number" value="18000">
+</div>
+
+<div>
+<label class="label">Build Cost ($)</label>
+<input id="buildCost" type="number" value="12000">
+</div>
+
+<div>
+<label class="label">AI Cost ($)</label>
+<input id="aiCost" type="number" value="6000">
+</div>
+
+<div>
+<label class="label">Training ($)</label>
+<input id="trainingCost" type="number" value="0">
+</div>
+
+</div>
+
+<button onclick="calculateROI()">
+Calculate ROI
+</button>
+
+<div class="grid three" style="margin-top:15px">
+
+<div>
+<div class="label">Annual Benefit</div>
+<div class="metric green" id="benefit">$0</div>
+</div>
+
+<div>
+<div class="label">Annual TCO</div>
+<div class="metric" id="tco">$0</div>
+</div>
+
+<div>
+<div class="label">Net Benefit</div>
+<div class="metric" id="net">$0</div>
+</div>
+
+</div>
+
+<p>
+ROI: <b id="roi">0%</b>
+</p>
+
+<p>
+Payback: <b id="payback">0 months</b>
+</p>
+
+<p class="note">
+Illustrative workshop assumptions only.
+Replace them with customer-validated financial data.
+</p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>5. Executive Decision Summary</h2>
+
+<div id="summary" class="result">
+Complete the architecture and ROI exercises to build the executive recommendation.
+</div>
+
+</section>
+
+<p class="note">
+QuickKart classroom environment. This Day 1 dashboard does not make LLM calls.
+</p>
+
+</main>
+
+<script>
+
+let strategy = {};
+
+const $ = id => document.getElementById(id);
+
+const money = value =>
+    "$" + Math.round(value).toLocaleString();
+
+async function initialize() {
+
+    const response = await fetch("/api/strategy");
+
+    strategy = await response.json();
+
+    const b = strategy.business;
+
+    $("cases").textContent =
+        b.annual_exception_cases.toLocaleString();
+
+    $("time").textContent =
+        b.average_investigation_minutes + " min";
+
+    $("adoption").textContent =
+        (b.target_ai_adoption * 100) + "%";
+
+    $("processes").textContent =
+        b.business_processes.length;
+
+    $("frameworks").innerHTML =
+        strategy.frameworks.map(f => `
+        <div class="framework">
+            <b>${f.name}</b>
+            <p>${f.category}</p>
+            <p><b>Best for:</b> ${f.best_for}</p>
+            <p><b>Strength:</b> ${f.strength}</p>
+            <p><b>Trade-off:</b> ${f.tradeoff}</p>
+        </div>
+        `).join("");
+
+    $("rai").innerHTML =
+        strategy.responsible_ai.map(r => `
+        <tr>
+            <td><b>${r.principle}</b></td>
+            <td>${r.risk}</td>
+            <td>${r.owner}</td>
+            <td>${r.status}</td>
+        </tr>
+        `).join("");
+
+    const roi = strategy.roi;
+
+    $("annualCases").value = roi.annual_cases;
+    $("minutesSaved").value = roi.minutes_saved_per_case;
+    $("hourlyCost").value = roi.loaded_hourly_cost;
+    $("adoptionRate").value = roi.adoption_rate;
+    $("platformCost").value = roi.annual_platform_cost;
+    $("buildCost").value = roi.annual_build_change_cost;
+    $("aiCost").value = roi.annual_ai_cost;
+    $("trainingCost").value = roi.annual_training_cost;
+
+    calculateROI();
+}
+
+async function saveDecision() {
+
+    const choice = $("framework").value;
+
+    const rationale = $("rationale").value.trim();
+
+    if (!rationale) {
+        alert("Please provide an architecture rationale.");
+        return;
+    }
+
+    const response = await fetch("/api/decision", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            choice,
+            rationale
+        })
+    });
+
+    const result = await response.json();
+
+    $("decisionResult").textContent =
+        response.ok
+        ? JSON.stringify(result.decision, null, 2)
+        : result.error;
+
+    updateSummary();
+}
+
+function calculateROI() {
+
+    const cases = Number($("annualCases").value);
+    const minutes = Number($("minutesSaved").value);
+    const hourly = Number($("hourlyCost").value);
+    const adoption = Number($("adoptionRate").value);
+
+    const platform = Number($("platformCost").value);
+    const build = Number($("buildCost").value);
+    const ai = Number($("aiCost").value);
+    const training = Number($("trainingCost").value);
+
+    if (
+        ![cases, minutes, hourly, adoption, platform, build, ai, training]
+        .every(Number.isFinite) ||
+        cases < 0 || minutes < 0 || hourly < 0 ||
+        adoption < 0 || adoption > 1 ||
+        platform < 0 || build < 0 || ai < 0 || training < 0
+    ) {
+        alert("Please enter valid non-negative values. Adoption must be between 0 and 1.");
+        return;
+    }
+
+    const benefit =
+        (cases * minutes / 60) * hourly * adoption;
+
+    const tco =
+        platform + build + ai + training;
+
+    const net = benefit - tco;
+
+    const roi =
+        tco > 0 ? (net / tco) * 100 : 0;
+
+    const payback =
+        benefit > 0 ? (tco / benefit) * 12 : null;
+
+    $("benefit").textContent = money(benefit);
+    $("tco").textContent = money(tco);
+    $("net").textContent = money(net);
+
+    $("roi").textContent = roi.toFixed(2) + "%";
+
+    $("payback").textContent =
+        payback === null
+        ? "Not available"
+        : payback.toFixed(2) + " months";
+
+    updateSummary({
+        benefit,
+        tco,
+        net,
+        roi,
+        payback
+    });
+}
+
+function updateSummary(financials) {
+
+    const selected = $("framework").selectedOptions[0].text;
+
+    const rationale =
+        $("rationale").value || "Not submitted yet";
+
+    const roi = $("roi").textContent;
+
+    $("summary").textContent =
+        "QUICKKART EXECUTIVE AI RECOMMENDATION\n\n" +
+        "Selected framework: " + selected + "\n\n" +
+        "Architecture rationale: " + rationale + "\n\n" +
+        "Projected ROI: " + roi + "\n\n" +
+        "Governance: Six Responsible AI principles identified.\n\n" +
+        "Recommendation: Validate business baselines, run a controlled pilot, " +
+        "evaluate safety and performance, and approve production only after " +
+        "the required security and governance gates.";
+}
+
+initialize();
+
+</script>
+
+</body>
+</html>
