@@ -45,3 +45,25 @@ python .\scripts\run_multi_agent.py
 
 This also requires `OPENAI_API_KEY` and makes live OpenAI API calls.
 The report is saved to `data/last_agent_run.json` relative to the working directory.
+
+## Run the MCP server in VS Code
+
+The workspace MCP configuration uses `C:\Program Files\Python314-arm64\python.exe`
+and starts `app.tools.mcp_server` from the workspace root. If Python is installed
+elsewhere, update `command` in `.vscode/mcp.json` to that interpreter's full path
+and install the requirements with it.
+
+In VS Code, run **MCP: List Servers**, select **quickkart-operations**, and
+start or restart the server after changing the configuration.
+
+## Test state and memory
+
+From the repository root:
+
+```powershell
+python .\scripts\test_state_memory.py
+```
+
+Alternatively, run `python -m scripts.test_state_memory`.
+This creates a test session and appends an investigation note for `QK-1002`
+in the local state and memory files.

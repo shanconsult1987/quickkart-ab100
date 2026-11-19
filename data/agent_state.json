@@ -1,0 +1,23 @@
+{
+  "sessions": {
+    "6720212c-0a9f-446a-a649-29df38b3271b": {
+      "order_id": "QK-1002",
+      "status": "completed",
+      "created_at": "2026-11-19T07:16:52.114218+00:00",
+      "steps": [
+        {
+          "agent": "PlannerAgent",
+          "status": "completed",
+          "summary": "Identified pending payment as an investigation area.",
+          "timestamp": "2026-11-19T07:16:52.128858+00:00"
+        },
+        {
+          "agent": "PaymentAgent",
+          "status": "completed",
+          "summary": "Payment status is pending.",
+          "timestamp": "2026-11-19T07:16:52.140984+00:00"
+        }
+      ]
+    }
+  }
+}

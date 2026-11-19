@@ -1,0 +1,14 @@
+
+{
+  "servers": {
+    "quickkart-operations": {
+      "type": "stdio",
+      "command": "C:\\Program Files\\Python314-arm64\\python.exe",
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "-m",
+        "app.tools.mcp_server"
+      ]
+    }
+  }
+}
