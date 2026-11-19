@@ -67,3 +67,15 @@ python .\scripts\test_state_memory.py
 Alternatively, run `python -m scripts.test_state_memory`.
 This creates a test session and appends an investigation note for `QK-1002`
 in the local state and memory files.
+
+## Test guardrails and approvals
+
+From the repository root:
+
+```powershell
+python .\scripts\test_guardrails.py
+```
+
+Alternatively, run `python -m scripts.test_guardrails`.
+This creates and rejects a sample refund approval request and writes local
+approval and audit records. It does not execute a refund.

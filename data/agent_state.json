@@ -18,6 +18,49 @@
           "timestamp": "2026-11-19T07:16:52.140984+00:00"
         }
       ]
+    },
+    "89a3c8dc-44d0-433a-86af-69121bace7d6": {
+      "order_id": "QK-1002",
+      "status": "completed",
+      "created_at": "2026-11-19T07:39:15.447917+00:00",
+      "steps": [
+        {
+          "agent": "PlannerAgent",
+          "status": "completed",
+          "summary": "Investigation Plan:\n1. Verify the payment status and reasons for the payment still being pending despite the order being in processing status.\n2. Confirm there are no issues with the payment method or transaction failures.\n3. Assess any potential impact on order processing and delivery timing due to payment delay.\n4. Review communication logs with the customer regarding payment instructions or reminders.\n\nRecommended Specialist Agents:\n- Payment Processing Specialist: To analyze payment issues a",
+          "timestamp": "2026-11-19T07:39:40.085299+00:00"
+        },
+        {
+          "agent": "OrderAgent",
+          "status": "completed",
+          "summary": "The order QK-1002 is currently in Processing status, but the payment status is still Pending. The payment has not been completed yet, which is identified as an issue (payment_pending). Inventory is available for the order, so stock is not a problem.\n\nBecause payment is pending, this could delay the order processing and might impact the delivery timing, currently estimated at 62 minutes.\n\nNext steps would involve consulting Payment Processing to understand why payment is still pending, confirming",
+          "timestamp": "2026-11-19T07:39:40.104573+00:00"
+        },
+        {
+          "agent": "PaymentAgent",
+          "status": "completed",
+          "summary": "The order QK-1002 is currently in \"Processing\" status, but the payment status is still \"Pending.\" The inventory is available, and the delivery time is estimated at 62 minutes. The main issue identified is the payment pending status, which needs investigation.\n\nNext steps:\n- Payment Processing Specialist should analyze the payment method and transaction details to determine why the payment is still pending despite the order moving forward.\n- Order Management Specialist should assess the impact of",
+          "timestamp": "2026-11-19T07:39:40.121199+00:00"
+        },
+        {
+          "agent": "InventoryAgent",
+          "status": "completed",
+          "summary": "The QuickKart order QK-1002 is currently in Processing status with payment status marked as Pending. The inventory is available for this order, so there are no stock shortages or inventory-related risks impacting the order fulfillment.\n\nThe main issue lies with the payment still being pending despite the order progressing to Processing. This situation may affect the completion of the order and its timely delivery. Since the delivery is scheduled in 62 minutes, payment delays could potentially im",
+          "timestamp": "2026-11-19T07:39:40.135819+00:00"
+        },
+        {
+          "agent": "CustomerAgent",
+          "status": "completed",
+          "summary": "Dear Customer,\n\nThank you for shopping with QuickKart. We wanted to update you regarding your order QK-1002. Currently, your order is being processed, and the items are available in our inventory. However, we have noticed that the payment for your order is still pending.\n\nSince the payment is not yet completed, this may delay the processing and delivery of your order, which is currently estimated to arrive in about 62 minutes. To avoid any delays, please review your payment and ensure it is succ",
+          "timestamp": "2026-11-19T07:39:40.153025+00:00"
+        },
+        {
+          "agent": "SupervisorAgent",
+          "status": "completed",
+          "summary": "Investigation Summary:\n- Order QK-1002 status: Processing\n- Payment status: Pending (payment not completed)\n- Inventory status: Available (no stock issues)\n- Delivery estimated in 62 minutes\n- Key issue: Payment pending, causing potential delay in order fulfillment and delivery\n\nMost Likely Root Cause:\nThe payment for order QK-1002 has not been completed, which is preventing the order from progressing to shipment and on-time delivery.\n\nSupporting Evidence:\n- Payment status explicitly marked as P",
+          "timestamp": "2026-11-19T07:39:40.168588+00:00"
+        }
+      ]
     }
   }
 }

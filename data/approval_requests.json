@@ -1,0 +1,12 @@
+[
+  {
+    "approval_id": "60c6c614-5e8f-4cb5-b25c-6dc6108c5fe3",
+    "order_id": "QK-1002",
+    "action": "execute_refund",
+    "reason": "Customer requested a refund due to order delay.",
+    "status": "rejected",
+    "created_at": "2026-11-19T07:36:19.685721+00:00",
+    "approver": "WorkshopApprover",
+    "decision_at": "2026-11-19T07:36:19.704189+00:00"
+  }
+]
