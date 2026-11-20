@@ -1,0 +1,57 @@
+
+{
+  "application": "QuickKart Operations Agent",
+  "environment": "Workshop",
+  "governance_owner": "QuickKart Operations",
+  "controls": [
+    {
+      "id": "GOV-001",
+      "name": "Human approval for financial actions",
+      "enabled": true,
+      "severity": "critical",
+      "description": "Financial actions must be reviewed by a human."
+    },
+    {
+      "id": "GOV-002",
+      "name": "Read-only investigation",
+      "enabled": true,
+      "severity": "critical",
+      "description": "Agents may inspect order, payment and inventory data but must not modify business records."
+    },
+    {
+      "id": "GOV-003",
+      "name": "Audit trail",
+      "enabled": true,
+      "severity": "high",
+      "description": "Investigation and approval events must be recorded."
+    },
+    {
+      "id": "GOV-004",
+      "name": "Secret protection",
+      "enabled": true,
+      "severity": "critical",
+      "description": "API keys and environment files must not be committed to source control."
+    },
+    {
+      "id": "GOV-005",
+      "name": "Agent evaluation",
+      "enabled": true,
+      "severity": "high",
+      "description": "Actual agent investigation reports must be evaluated."
+    },
+    {
+      "id": "GOV-006",
+      "name": "Reviewer accountability",
+      "enabled": true,
+      "severity": "high",
+      "description": "Approval decisions must record reviewer information and a decision."
+    },
+    {
+      "id": "GOV-007",
+      "name": "Unsupported completion claims",
+      "enabled": true,
+      "severity": "high",
+      "description": "Agents must not claim that refunds or cancellations have been completed without an authorized execution result."
+    }
+  ]
+}

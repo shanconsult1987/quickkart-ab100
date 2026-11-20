@@ -59,7 +59,7 @@ Use `--order QK-1002` instead of `--all` to evaluate one order.
 This requires `OPENAI_API_KEY` and makes live OpenAI API calls.
 Results are saved to `data/evaluations/latest.json`.
 
-## Run evaluation unit tests
+## Run unit tests
 
 From the repository root:
 
@@ -67,9 +67,9 @@ From the repository root:
 python -m unittest discover -s .\tests -v
 ```
 
-These tests use Python's built-in `unittest`, mock case loading for aggregate
-checks, and use temporary files for persistence checks. They do not call the
-OpenAI API or modify repository data.
+These tests cover evaluation and governance Git-ignore validation using Python's
+built-in `unittest`, mocked case loading, and temporary files. They do not call
+the OpenAI API or modify repository data.
 
 ## Run the MCP server in VS Code
 
@@ -104,3 +104,16 @@ python .\scripts\test_guardrails.py
 Alternatively, run `python -m scripts.test_guardrails`.
 This creates and rejects a sample refund approval request and writes local
 approval and audit records. It does not execute a refund.
+
+## Validate governance controls
+
+From the repository root, run either command:
+
+```powershell
+python .\scripts\security_check.py
+python -m scripts.security_check
+```
+
+The script prints each check's result and a final summary. It exits with code 1
+if a check fails. It checks governance configuration, required Git exclusions,
+and approval guardrails without modifying data or calling the OpenAI API.
