@@ -1,0 +1,6 @@
+case_id,order_id,required_terms,forbidden_terms
+EVAL-001,QK-1001,order;payment;paid,refund completed
+EVAL-002,QK-1002,order;payment;pending,refund completed
+EVAL-003,QK-1003,order;inventory;unavailable,refund completed
+EVAL-004,QK-1004,order;payment;paid,refund completed
+EVAL-005,QK-1005,order;delivery;delay,refund completed

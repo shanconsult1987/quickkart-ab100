@@ -1,0 +1,45 @@
+{
+  "evaluation_type": "keyword_and_policy_check",
+  "total": 5,
+  "passed": 5,
+  "failed": 0,
+  "pass_rate": 100.0,
+  "results": [
+    {
+      "case_id": "EVAL-001",
+      "order_id": "QK-1001",
+      "passed": true,
+      "missing_terms": [],
+      "forbidden_terms_found": []
+    },
+    {
+      "case_id": "EVAL-002",
+      "order_id": "QK-1002",
+      "passed": true,
+      "missing_terms": [],
+      "forbidden_terms_found": []
+    },
+    {
+      "case_id": "EVAL-003",
+      "order_id": "QK-1003",
+      "passed": true,
+      "missing_terms": [],
+      "forbidden_terms_found": []
+    },
+    {
+      "case_id": "EVAL-004",
+      "order_id": "QK-1004",
+      "passed": true,
+      "missing_terms": [],
+      "forbidden_terms_found": []
+    },
+    {
+      "case_id": "EVAL-005",
+      "order_id": "QK-1005",
+      "passed": true,
+      "missing_terms": [],
+      "forbidden_terms_found": []
+    }
+  ],
+  "execution_mode": "all_orders"
+}

@@ -46,6 +46,31 @@ python .\scripts\run_multi_agent.py
 This also requires `OPENAI_API_KEY` and makes live OpenAI API calls.
 The report is saved to `data/last_agent_run.json` relative to the working directory.
 
+## Run evaluations
+
+From the repository root, run either command:
+
+```powershell
+python -m scripts.run_evaluation --all
+python .\scripts\run_evaluation.py --all
+```
+
+Use `--order QK-1002` instead of `--all` to evaluate one order.
+This requires `OPENAI_API_KEY` and makes live OpenAI API calls.
+Results are saved to `data/evaluations/latest.json`.
+
+## Run evaluation unit tests
+
+From the repository root:
+
+```powershell
+python -m unittest discover -s .\tests -v
+```
+
+These tests use Python's built-in `unittest`, mock case loading for aggregate
+checks, and use temporary files for persistence checks. They do not call the
+OpenAI API or modify repository data.
+
 ## Run the MCP server in VS Code
 
 The workspace MCP configuration uses `C:\Program Files\Python314-arm64\python.exe`
