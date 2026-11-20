@@ -1,0 +1,706 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>QuickKart Investigation and Human Review</title>
+
+<style>
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    background: #f3f6fa;
+    color: #172b42;
+}
+
+header {
+    background: #10243a;
+    color: white;
+    padding: 18px 24px;
+}
+
+main {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+.panel {
+    background: white;
+    border: 1px solid #dce4ed;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 16px;
+}
+
+h1 {
+    font-size: 22px;
+    margin: 0;
+}
+
+h2 {
+    font-size: 17px;
+    margin-top: 0;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    margin: 6px 0 12px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+button {
+    border: 0;
+    border-radius: 6px;
+    padding: 11px 16px;
+    background: #1769aa;
+    color: white;
+    cursor: pointer;
+    margin: 4px;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button.secondary {
+    background: #526579;
+}
+
+button.danger {
+    background: #b42318;
+}
+
+.muted {
+    color: #63758a;
+    font-size: 13px;
+}
+
+.result {
+    white-space: pre-wrap;
+    background: #f7f9fc;
+    padding: 14px;
+    border-radius: 7px;
+    line-height: 1.5;
+}
+
+.item {
+    border-top: 1px solid #e5eaf0;
+    padding: 12px 0;
+}
+
+.error {
+    color: #b42318;
+}
+
+.success {
+    color: #167344;
+}
+
+.status {
+    font-weight: 700;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>
+        QuickKart | Agent Investigation and Human Review
+    </h1>
+
+    <div class="muted" style="color:#c8d9e8">
+        AI recommendation · Human decision · Audit trail
+    </div>
+
+</header>
+
+
+<main>
+
+
+    <section class="panel">
+
+        <h2>1. Investigate an order</h2>
+
+        <label for="orderId">
+            Order ID
+        </label>
+
+        <input
+            id="orderId"
+            value="QK-1002"
+        >
+
+        <button id="investigateButton">
+            Run multi-agent investigation
+        </button>
+
+        <div
+            id="investigationStatus"
+            class="muted">
+            Ready to investigate.
+        </div>
+
+    </section>
+
+
+    <section
+        class="panel"
+        id="resultPanel"
+        hidden>
+
+        <h2>2. Supervisor report</h2>
+
+        <div
+            id="finalReport"
+            class="result">
+        </div>
+
+        <h2 style="margin-top:18px">
+            Agent findings
+        </h2>
+
+        <div id="agentFindings"></div>
+
+    </section>
+
+
+    <section
+        class="panel"
+        id="requestPanel"
+        hidden>
+
+        <h2>3. Request human approval</h2>
+
+        <p class="muted">
+            This request is linked to the saved investigation.
+            The workshop records the human decision and does not
+            execute a refund or payment operation.
+        </p>
+
+        <label for="action">
+            Proposed action
+        </label>
+
+        <select id="action">
+
+            <option value="execute_refund">
+                Refund request
+            </option>
+
+            <option value="cancel_order">
+                Cancellation request
+            </option>
+
+            <option value="manual_review">
+                Manual operational review
+            </option>
+
+        </select>
+
+
+        <label for="reason">
+            Reason for approval
+        </label>
+
+        <textarea
+            id="reason"
+            rows="3">Review the agent findings and decide whether this action is appropriate.</textarea>
+
+
+        <button id="requestButton">
+            Submit approval request
+        </button>
+
+        <div
+            id="requestStatus"
+            class="muted">
+        </div>
+
+    </section>
+
+
+    <section class="panel">
+
+        <h2>4. Human approval queue</h2>
+
+        <div id="approvalQueue">
+            Loading approvals...
+        </div>
+
+    </section>
+
+
+    <section class="panel">
+
+        <h2>5. Decision history</h2>
+
+        <div id="decisionHistory">
+            Loading decision history...
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<script>
+
+
+let currentInvestigation = null;
+
+
+const element = id => {
+
+    return document.getElementById(id);
+
+};
+
+
+async function api(url, options = {}) {
+
+    const response = await fetch(
+        url,
+        {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            ...options
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+
+        throw new Error(
+            data.error || "Request failed."
+        );
+
+    }
+
+    return data;
+
+}
+
+
+element("investigateButton").onclick = async () => {
+
+    const button = element(
+        "investigateButton"
+    );
+
+    button.disabled = true;
+
+    element(
+        "investigationStatus"
+    ).textContent = "Running six-agent investigation...";
+
+
+    try {
+
+        const orderId = element(
+            "orderId"
+        ).value.trim();
+
+
+        currentInvestigation = await api(
+            "/api/investigate",
+            {
+                method: "POST",
+
+                body: JSON.stringify({
+                    order_id: orderId
+                })
+            }
+        );
+
+
+        element(
+            "finalReport"
+        ).textContent =
+            currentInvestigation.final_report;
+
+
+        const findings = element(
+            "agentFindings"
+        );
+
+        findings.replaceChildren();
+
+
+        currentInvestigation.agents.forEach(
+            item => {
+
+                const container =
+                    document.createElement("div");
+
+                container.className = "item";
+
+
+                const heading =
+                    document.createElement("strong");
+
+                heading.textContent = item.agent;
+
+
+                const response =
+                    document.createElement("div");
+
+                response.className = "result";
+
+                response.textContent =
+                    item.response;
+
+
+                container.append(
+                    heading,
+                    response
+                );
+
+                findings.append(
+                    container
+                );
+
+            }
+        );
+
+
+        element(
+            "resultPanel"
+        ).hidden = false;
+
+
+        element(
+            "requestPanel"
+        ).hidden = false;
+
+
+        element(
+            "investigationStatus"
+        ).textContent =
+            "Investigation saved: "
+            + currentInvestigation.investigation_id;
+
+
+        element(
+            "investigationStatus"
+        ).className = "success";
+
+
+    } catch (error) {
+
+        element(
+            "investigationStatus"
+        ).textContent = error.message;
+
+        element(
+            "investigationStatus"
+        ).className = "error";
+
+    } finally {
+
+        button.disabled = false;
+
+    }
+
+};
+
+
+element("requestButton").onclick = async () => {
+
+    if (!currentInvestigation) {
+
+        element(
+            "requestStatus"
+        ).textContent =
+            "Run an investigation first.";
+
+        return;
+
+    }
+
+
+    try {
+
+        const result = await api(
+            "/api/approvals/request",
+            {
+                method: "POST",
+
+                body: JSON.stringify({
+
+                    investigation_id:
+                        currentInvestigation.investigation_id,
+
+                    action:
+                        element("action").value,
+
+                    reason:
+                        element("reason").value
+
+                })
+            }
+        );
+
+
+        element(
+            "requestStatus"
+        ).textContent =
+            "Approval request created: "
+            + result.approval.approval_id;
+
+
+        await refreshApprovals();
+
+
+    } catch (error) {
+
+        element(
+            "requestStatus"
+        ).textContent = error.message;
+
+    }
+
+};
+
+
+async function decideApproval(
+    approvalId,
+    decision
+) {
+
+    const approver = window.prompt(
+        "Enter reviewer name:"
+    );
+
+    if (!approver || !approver.trim()) {
+
+        return;
+
+    }
+
+
+    const comment = window.prompt(
+        "Enter reviewer decision comment:"
+    );
+
+    if (!comment || !comment.trim()) {
+
+        return;
+
+    }
+
+
+    try {
+
+        await api(
+            "/api/approvals/decision",
+            {
+                method: "POST",
+
+                body: JSON.stringify({
+
+                    approval_id: approvalId,
+
+                    decision: decision,
+
+                    approver: approver,
+
+                    comment: comment
+
+                })
+            }
+        );
+
+
+        await refreshApprovals();
+
+
+    } catch (error) {
+
+        window.alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+async function refreshApprovals() {
+
+    const data = await api(
+        "/api/approvals"
+    );
+
+
+    const pending = data.approvals.filter(
+        item => item.status === "pending"
+    );
+
+
+    const decided = data.approvals
+        .filter(
+            item => item.status !== "pending"
+        )
+        .slice()
+        .reverse();
+
+
+    const queue = element(
+        "approvalQueue"
+    );
+
+    queue.replaceChildren();
+
+
+    if (pending.length === 0) {
+
+        queue.textContent =
+            "No pending approval requests.";
+
+    }
+
+
+    pending.forEach(item => {
+
+        const container =
+            document.createElement("div");
+
+        container.className = "item";
+
+
+        const details =
+            document.createElement("div");
+
+        details.textContent =
+            item.order_id
+            + " · "
+            + item.action
+            + " · "
+            + item.reason;
+
+
+        const approve =
+            document.createElement("button");
+
+        approve.textContent = "Approve";
+
+        approve.onclick = () => {
+
+            decideApproval(
+                item.approval_id,
+                "approved"
+            );
+
+        };
+
+
+        const reject =
+            document.createElement("button");
+
+        reject.textContent = "Reject";
+
+        reject.className = "danger";
+
+        reject.onclick = () => {
+
+            decideApproval(
+                item.approval_id,
+                "rejected"
+            );
+
+        };
+
+
+        container.append(
+            details,
+            approve,
+            reject
+        );
+
+        queue.append(
+            container
+        );
+
+    });
+
+
+    const history = element(
+        "decisionHistory"
+    );
+
+    history.replaceChildren();
+
+
+    if (decided.length === 0) {
+
+        history.textContent =
+            "No human decisions recorded yet.";
+
+    }
+
+
+    decided.forEach(item => {
+
+        const container =
+            document.createElement("div");
+
+        container.className = "item";
+
+        container.textContent =
+            item.order_id
+            + " · "
+            + item.action
+            + " · "
+            + item.status.toUpperCase()
+            + " · "
+            + (item.approver || "Unknown")
+            + " · "
+            + (item.comment || "");
+
+        history.append(
+            container
+        );
+
+    });
+
+}
+
+
+refreshApprovals().catch(
+    error => {
+
+        element(
+            "approvalQueue"
+        ).textContent = error.message;
+
+    }
+);
+
+
+</script>
+
+</body>
+
+</html>

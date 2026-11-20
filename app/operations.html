@@ -1,0 +1,512 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>QuickKart Operations Monitoring</title>
+
+<style>
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    background: #f3f6fa;
+    color: #172b42;
+}
+
+header {
+    background: #10243a;
+    color: white;
+    padding: 20px 24px;
+}
+
+main {
+    max-width: 1200px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #dce4ed;
+    border-radius: 9px;
+    padding: 17px;
+}
+
+.value {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+.label {
+    color: #63758a;
+    font-size: 13px;
+}
+
+section {
+    background: white;
+    border: 1px solid #dce4ed;
+    border-radius: 9px;
+    padding: 18px;
+    margin: 16px 0;
+}
+
+button {
+    background: #1769aa;
+    color: white;
+    border: 0;
+    padding: 10px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td,
+th {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #e5eaf0;
+}
+
+@media (max-width: 800px) {
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>
+        QuickKart | Operations Monitoring
+    </h1>
+
+    <div>
+        Application health · Agent activity · Model usage · Evaluation
+    </div>
+
+</header>
+
+
+<main>
+
+    <p>
+
+        <button id="refreshButton">
+            Refresh metrics
+        </button>
+
+        <span
+            id="updated"
+            class="label">
+        </span>
+
+    </p>
+
+
+    <div class="grid">
+
+        <div class="card">
+
+            <div class="label">
+                HTTP requests
+            </div>
+
+            <div
+                class="value"
+                id="requests">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="label">
+                2xx / 4xx / 5xx
+            </div>
+
+            <div
+                class="value"
+                id="statuses">
+                0 / 0 / 0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="label">
+                Average latency
+            </div>
+
+            <div
+                class="value"
+                id="averageLatency">
+                0 ms
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="label">
+                P95 latency
+            </div>
+
+            <div
+                class="value"
+                id="p95Latency">
+                0 ms
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="label">
+                OpenAI SDK calls
+            </div>
+
+            <div
+                class="value"
+                id="modelCalls">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="label">
+                Input tokens
+            </div>
+
+            <div
+                class="value"
+                id="inputTokens">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="label">
+                Output tokens
+            </div>
+
+            <div
+                class="value"
+                id="outputTokens">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="label">
+                Agent failures
+            </div>
+
+            <div
+                class="value"
+                id="agentFailures">
+                0
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <section>
+
+        <h2>Evaluation snapshot</h2>
+
+        <div id="evaluation">
+            No evaluation has been run yet.
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Governance controls</h2>
+
+        <div id="governance">
+            Loading governance controls...
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <h2>Human approval activity</h2>
+
+        <div id="approvals">
+            Loading approval activity...
+        </div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+
+async function getData(url) {
+
+    const response = await fetch(
+        url
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+
+        throw new Error(
+            data.error || "Request failed."
+        );
+
+    }
+
+    return data;
+
+}
+
+
+async function refreshDashboard() {
+
+    const metrics = await getData(
+        "/api/metrics"
+    );
+
+
+    const http = metrics.http;
+
+    const models = metrics.models;
+
+    const agents = metrics.agents;
+
+
+    document.getElementById(
+        "requests"
+    ).textContent =
+        http.total_requests;
+
+
+    document.getElementById(
+        "statuses"
+    ).textContent =
+        http.success_2xx
+        + " / "
+        + http.client_errors_4xx
+        + " / "
+        + http.server_errors_5xx;
+
+
+    document.getElementById(
+        "averageLatency"
+    ).textContent =
+        http.average_latency_ms + " ms";
+
+
+    document.getElementById(
+        "p95Latency"
+    ).textContent =
+        http.p95_latency_ms + " ms";
+
+
+    document.getElementById(
+        "modelCalls"
+    ).textContent =
+        models.calls;
+
+
+    document.getElementById(
+        "inputTokens"
+    ).textContent =
+        models.input_tokens;
+
+
+    document.getElementById(
+        "outputTokens"
+    ).textContent =
+        models.output_tokens;
+
+
+    document.getElementById(
+        "agentFailures"
+    ).textContent =
+        agents.failures;
+
+
+    const evaluation = await getData(
+        "/api/evaluations"
+    );
+
+
+    if (evaluation.available === false) {
+
+        document.getElementById(
+            "evaluation"
+        ).textContent =
+            evaluation.message;
+
+    } else {
+
+        document.getElementById(
+            "evaluation"
+        ).textContent =
+            evaluation.passed
+            + " / "
+            + evaluation.total
+            + " passed · "
+            + evaluation.pass_rate
+            + "% · "
+            + evaluation.failed
+            + " failed";
+
+    }
+
+
+    const governance = await getData(
+        "/api/governance"
+    );
+
+
+    const governanceContainer =
+        document.getElementById("governance");
+
+    governanceContainer.replaceChildren();
+
+
+    governance.controls.forEach(control => {
+
+        const paragraph =
+            document.createElement("p");
+
+        paragraph.textContent =
+            (control.enabled ? "✓ " : "✕ ")
+            + control.id
+            + " — "
+            + control.name;
+
+        governanceContainer.append(
+            paragraph
+        );
+
+    });
+
+
+    const approvalData = await getData(
+        "/api/approvals"
+    );
+
+
+    const counts = {
+
+        pending: 0,
+
+        approved: 0,
+
+        rejected: 0
+
+    };
+
+
+    approvalData.approvals.forEach(item => {
+
+        counts[item.status] =
+            (counts[item.status] || 0) + 1;
+
+    });
+
+
+    document.getElementById(
+        "approvals"
+    ).textContent =
+        "Pending: "
+        + counts.pending
+        + " · Approved: "
+        + counts.approved
+        + " · Rejected: "
+        + counts.rejected;
+
+
+    document.getElementById(
+        "updated"
+    ).textContent =
+        "Updated "
+        + new Date().toLocaleTimeString();
+
+}
+
+
+document.getElementById(
+    "refreshButton"
+).addEventListener(
+    "click",
+    () => {
+
+        refreshDashboard().catch(
+            error => alert(error.message)
+        );
+
+    }
+);
+
+
+refreshDashboard().catch(
+    error => alert(error.message)
+);
+
+
+</script>
+
+</body>
+
+</html>
