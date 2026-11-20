@@ -1,4 +1,4 @@
-# quickkart-ab100
+# QuickKart (AB-100)
 
 ## Install dependencies
 
